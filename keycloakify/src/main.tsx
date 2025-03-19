@@ -18,7 +18,7 @@ if (import.meta.env.DEV) {
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
         {!window.kcContext ? (
-            <h1>No Keycloak Context</h1>
+            <h1>No Keycloak Context 1</h1>
         ) : (
             <KcPage kcContext={window.kcContext} />
         )}
