@@ -29,7 +29,7 @@ jobs:
               echo $TAG > /tmp/tag
             else
               echo "Tag exists, skipping"
-              exit 1
+              circleci-agent step halt
             fi
       - aws-ecr/build_and_push_image:
           auth:
