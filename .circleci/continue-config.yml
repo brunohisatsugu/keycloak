@@ -1,7 +1,7 @@
 # test
 version: 2.1
 orbs:
-  aws-cli: circleci/aws-cli@5.1
+  aws-cli: circleci/aws-cli@5.2
   aws-ecr: circleci/aws-ecr@9.0
 
 executors:
@@ -20,7 +20,7 @@ jobs:
     steps:
       - checkout
       - aws-cli/setup:
-          role-arn: "${AWS_OIDC_ROLE_ARN}"
+          role_arn: "${AWS_OIDC_ROLE_ARN}"
           region: "${AWS_DEFAULT_REGION}"   
       - run:
           name: Set variables
