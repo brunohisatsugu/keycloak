@@ -44,9 +44,9 @@ jobs:
           repo: test_circleci
           tag: "$(cat /tmp/tag)"
       - aws-ecr/push_image:
-          region: << parameters.region >>
-          repo: << parameters.repo >>
-          tag: << parameters.tag >>          
+          region: "${AWS_DEFAULT_REGION}"
+          repo: test_circleci
+          tag: "$(cat /tmp/tag)"       
 
 only-main: &only-main
   filters:
