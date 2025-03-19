@@ -33,3 +33,5 @@ FROM quay.io/keycloak/keycloak:26.1
 COPY --from=builder --chown=keycloak:keycloak /opt/keycloak/ /opt/keycloak/
 
 ENTRYPOINT ["/opt/keycloak/bin/kc.sh"]
+
+#test
