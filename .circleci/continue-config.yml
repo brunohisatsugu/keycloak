@@ -20,6 +20,7 @@ jobs:
     steps:
       - checkout
       - aws-cli/setup:
+          profile: oidc_profile
           role_arn: "${AWS_OIDC_ROLE_ARN}"
           region: "${AWS_DEFAULT_REGION}"   
       - run:
@@ -36,12 +37,14 @@ jobs:
       - aws-ecr/build_and_push_image:
           auth:
             - aws-cli/setup:
+                profile: oidc_profile
                 role_arn: "${AWS_OIDC_ROLE_ARN}"
                 region: "${AWS_DEFAULT_REGION}"
+          profile_name: oidc_profile
           create_repo: true
           dockerfile: Dockerfile
           path: .
-          platform: linux/x86_64
+          platform: linux/amd64
           push_image: true
           region: "${AWS_DEFAULT_REGION}"
           repo: test_circleci
