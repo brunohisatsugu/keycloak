@@ -20,7 +20,8 @@ jobs:
     steps:
       - checkout
       - aws-cli/setup:
-          profile_name: context_based      
+          role-arn: "${AWS_OIDC_ROLE_ARN}"
+          aws-region: "${AWS_DEFAULT_REGION}"   
       - run:
           name: Set variables
           command: |
@@ -35,8 +36,8 @@ jobs:
       - aws-ecr/build_and_push_image:
           auth:
             - aws-cli/setup:
-                profile_name: context_based
-          profile_name: context_based
+                role-arn: "${AWS_OIDC_ROLE_ARN}"
+                aws-region: "${AWS_DEFAULT_REGION}"
           create_repo: true
           dockerfile: Dockerfile
           path: .
