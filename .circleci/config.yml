@@ -24,7 +24,7 @@ jobs:
             VERSION=2.6-inktavo-$(git rev-parse --short HEAD)
             TAG="${REPOSITORY}:${VERSION}"
 
-            TAG_EXISTS=$(aws ecr list-images --repository-name "${REPOSITORY_NAME}" --query 'imageIds[*].imageTag' --output text | grep -w "${VERSION}")
+            TAG_EXISTS=$(aws ecr list-images --profile context_based --repository-name "${REPOSITORY_NAME}" --query 'imageIds[*].imageTag' --output text | grep -w "${VERSION}")
 
             if [ -z "$TAG_EXISTS" ]; then
               echo $REPOSITORY_NAME > /tmp/repo
