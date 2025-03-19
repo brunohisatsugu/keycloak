@@ -40,7 +40,7 @@ jobs:
                 profile_name: context_based_ecr
                 role_arn: arn:aws:iam::686255947057:role/inktavo-keycloak-staging--CustomCDKECRDeploymentbd0-grU749Ym0pao
                 source_profile: context_based                
-          profile_name: context_based
+          profile_name: context_based_ecr
           create_repo: true
           dockerfile: Dockerfile
           path: .
