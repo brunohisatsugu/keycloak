@@ -36,7 +36,7 @@ jobs:
       - aws-ecr/build_and_push_image:
           auth:
             - aws-cli/setup:
-                role-arn: "${AWS_OIDC_ROLE_ARN}"
+                role_arn: "${AWS_OIDC_ROLE_ARN}"
                 region: "${AWS_DEFAULT_REGION}"
           create_repo: true
           dockerfile: Dockerfile
