@@ -44,6 +44,9 @@ jobs:
           repo: test_circleci
           tag: "$(cat /tmp/tag)"
       - aws-ecr/push_image:
+          auth:
+            - aws-cli/setup:
+                profile_name: context_based
           region: "${AWS_DEFAULT_REGION}"
           repo: test_circleci
           tag: "$(cat /tmp/tag)"       
