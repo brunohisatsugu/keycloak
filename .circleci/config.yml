@@ -24,6 +24,7 @@ jobs:
             VERSION=2.6-inktavo-$(git rev-parse --short HEAD)
             TAG="${REPOSITORY}:${VERSION}"
 
+            aws configure list-profiles
             TAG_EXISTS=$(aws ecr list-images --profile context_based --repository-name "${REPOSITORY_NAME}" --query 'imageIds[*].imageTag' --output text | grep -w "${VERSION}")
 
             if [ -z "$TAG_EXISTS" ]; then
