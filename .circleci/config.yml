@@ -1,69 +1,13 @@
 version: 2.1
 orbs:
-  aws-cli: circleci/aws-cli@5.1
-  aws-ecr: circleci/aws-ecr@9.0
-  aws-ecs: circleci/aws-ecs@6.0.2
-
-executors:
-  default:
-    docker:
-      - image: cimg/base:stable
-
-jobs:
-  keycloak-build-and-deploy:
-    executor: default
-    steps:
-      - checkout
-      - aws-cli/setup:
-          profile_name: context_based      
-      - run:
-          name: Check if the build is necessary
-          command: |
-            REPOSITORY_NAME="platform/keycloak"
-            REPOSITORY="${ECR_BASE}/${REPOSITORY_NAME}"
-            VERSION=2.6-inktavo-$(git rev-parse --short HEAD)
-            TAG="${REPOSITORY}:${VERSION}"
-
-            aws configure list-profiles
-            echo ${REPOSITORY}
-            TAG_EXISTS=$(aws ecr list-images --profile context_based --repository-name "${REPOSITORY_NAME}" --query 'imageIds[*].imageTag' --output text | grep -w "${VERSION}")
-
-            if [ -z "$TAG_EXISTS" ]; then
-              echo $REPOSITORY_NAME > /tmp/repo
-              echo $TAG > /tmp/tag
-            else
-              echo "Tag exists, skipping"
-              circleci-agent step halt
-            fi
-      - aws-ecr/build_and_push_image:
-          auth:
-            - aws-cli/setup:
-                profile_name: context_based
-          create_repo: true
-          dockerfile: Dockerfile
-          path: .
-          platform: linux/x86_64
-          push_image: true
-          region: "${AWS_DEFAULT_REGION}"
-          repo: test_circleci
-          tag: "$(cat /tmp/tag)"
-
-only-main: &only-main
-  filters:
-    branches:
-      only: main
-
-only-keycloak: &only-keycloak
-  filters:
-    paths:
-      only:
-        - keycloakify/**
-        - Dockerfile
+  path-filtering: circleci/path-filtering@1.2.0  
 
 workflows:
-  keycloak-staging-deploy:
+  setup-workflow:
     jobs:
-      - keycloak-build-and-deploy:
-          context: AWS_STAGING
-          <<: *only-main
-          <<: *only-keycloak
+      - path-filtering/filter:
+          base-revision: main
+          config-path: .circleci/keycloak-config.yml
+          mapping: |
+            keycloakify/.* build-keycloak true
+            Dockerfile build-keycloak true
