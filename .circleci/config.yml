@@ -10,5 +10,5 @@ workflows:
           base-revision: main
           config-path: .circleci/continue-config.yml
           mapping: |
-            keycloakify/.* build-keycloak true
-            Dockerfile build-keycloak true
+            keycloakify/.* build-keycloak true .circleci/continue-config.yml
+            Dockerfile build-keycloak true .circleci/continue-config.yml
