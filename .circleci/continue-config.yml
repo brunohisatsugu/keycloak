@@ -36,6 +36,7 @@ jobs:
           auth:
             - aws-cli/setup:
                 profile_name: context_based
+          profile_name: context_based
           create_repo: true
           dockerfile: Dockerfile
           path: .
