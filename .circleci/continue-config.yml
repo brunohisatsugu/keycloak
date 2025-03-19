@@ -29,7 +29,7 @@ jobs:
             VERSION=2.6-inktavo-$(git rev-parse --short HEAD)
             TAG="${REPOSITORY}:${VERSION}"
 
-            echo ~/.aws/credentials
+            cat ~/.aws/credentials
             echo $REPOSITORY_NAME > /tmp/repo
             echo $TAG > /tmp/tag
       - aws-ecr/build_and_push_image:
