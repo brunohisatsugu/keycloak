@@ -32,9 +32,9 @@ jobs:
             echo $REPOSITORY_NAME > /tmp/repo
             echo $TAG > /tmp/tag
       - aws-ecr/build_and_push_image:
-          auth:
-            - aws-cli/setup:
-                profile_name: context_based
+          # auth:
+          #   - aws-cli/setup:
+          #       profile_name: context_based
           create_repo: true
           dockerfile: Dockerfile
           path: .
