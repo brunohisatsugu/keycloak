@@ -59,8 +59,7 @@ only-main: &only-main
 
 workflows:
   keycloak-staging-deploy:
-    when: 
-      - << pipeline.parameters.build-keycloak >>   
+    when: << pipeline.parameters.build-keycloak >>
     jobs:
       - keycloak-build-and-deploy:
           context: AWS_STAGING
