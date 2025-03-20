@@ -27,7 +27,7 @@ jobs:
       - run:
           name: Set variables
           command: |
-            REPOSITORY_NAME="platform/keycloak"
+            REPOSITORY_NAME="platform/keycloak_379"
             REPOSITORY="${ECR_BASE}/${REPOSITORY_NAME}"
             VERSION=2.6-inktavo-$(git rev-parse --short HEAD)
             TAG="${REPOSITORY}:${VERSION}"
@@ -49,11 +49,11 @@ jobs:
           platform: linux/amd64
           push_image: true
           region: "${AWS_DEFAULT_REGION}"
-          repo: test_circleci
+          repo: "$(cat /tmp/repo)"
           tag: "$(cat /tmp/version)"
       - aws-ecr/push_image:
           region: "${AWS_DEFAULT_REGION}"
-          repo: test_circleci
+          repo: "$(cat /tmp/repo)"
           tag: "$(cat /tmp/version)"       
 
 only-main: &only-main
