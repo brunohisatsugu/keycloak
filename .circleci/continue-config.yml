@@ -41,7 +41,7 @@ jobs:
           dockerfile: Dockerfile
           path: .
           platform: linux/amd64
-          push_image: true
+          push_image: false
           region: "${AWS_DEFAULT_REGION}"
           repo: "$(cat /tmp/repo)"
           tag: "$(cat /tmp/version)"
@@ -50,6 +50,10 @@ jobs:
           repo: "$(cat /tmp/repo)"
           source_tag: "$(cat /tmp/version)"
           target_tag: latest
+      - aws-ecr/push_image:
+          region: "${AWS_DEFAULT_REGION}"
+          repo: "$(cat /tmp/repo)"
+          tag: "$(cat /tmp/version)"            
       - aws-ecr/push_image:
           region: "${AWS_DEFAULT_REGION}"
           repo: "$(cat /tmp/repo)"
