@@ -41,23 +41,10 @@ jobs:
           dockerfile: Dockerfile
           path: .
           platform: linux/amd64
-          push_image: false
+          push_image: true
           region: "${AWS_DEFAULT_REGION}"
           repo: "$(cat /tmp/repo)"
-          tag: "$(cat /tmp/version)"
-      - aws-ecr/tag_image:
-          profile_name: oidc_profile
-          repo: "$(cat /tmp/repo)"
-          source_tag: "$(cat /tmp/version)"
-          target_tag: latest
-      - aws-ecr/push_image:
-          region: "${AWS_DEFAULT_REGION}"
-          repo: "$(cat /tmp/repo)"
-          tag: "$(cat /tmp/version)"            
-      - aws-ecr/push_image:
-          region: "${AWS_DEFAULT_REGION}"
-          repo: "$(cat /tmp/repo)"
-          tag: latest      
+          tag: "$(cat /tmp/version),latest"
 
 only-main: &only-main
   filters:
