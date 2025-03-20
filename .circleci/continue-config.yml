@@ -16,7 +16,8 @@ parameters:
 
 jobs:
   keycloak-build-and-deploy:
-    # executor: default
+    machine:
+      image: ubuntu-2204:current
     steps:
       - checkout
       - aws-cli/setup:
