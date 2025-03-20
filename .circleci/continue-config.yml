@@ -59,4 +59,5 @@ workflows:
       - keycloak-build-and-deploy:
           context: AWS_STAGING
           <<: *only-main
-          requires: manual-deploy?
+          requires:
+            - manual-deploy?
