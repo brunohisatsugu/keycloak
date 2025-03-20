@@ -54,8 +54,8 @@ workflows:
     when: << pipeline.parameters.build-keycloak >>
     jobs:
       - manual-deploy?:
-        <<: *only-main
-        type: approval    
+          <<: *only-main
+          type: approval    
       - keycloak-build-and-deploy:
           context: AWS_STAGING
           <<: *only-main
