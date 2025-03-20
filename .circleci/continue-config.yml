@@ -34,6 +34,7 @@ jobs:
 
             cat ~/.aws/credentials
             echo $REPOSITORY_NAME > /tmp/repo
+            echo $VERSION > /tmp/version
             echo $TAG > /tmp/tag
       - aws-ecr/build_and_push_image:
           auth:
@@ -49,11 +50,11 @@ jobs:
           push_image: true
           region: "${AWS_DEFAULT_REGION}"
           repo: test_circleci
-          tag: "$(cat /tmp/tag)"
+          tag: "$(cat /tmp/version)"
       - aws-ecr/push_image:
           region: "${AWS_DEFAULT_REGION}"
           repo: test_circleci
-          tag: "$(cat /tmp/tag)"       
+          tag: "$(cat /tmp/version)"       
 
 only-main: &only-main
   filters:
