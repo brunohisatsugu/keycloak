@@ -24,7 +24,7 @@ jobs:
           command: |
             REPOSITORY_NAME="platform/keycloak_379"
             VERSION=2.6-inktavo-$(git rev-parse --short HEAD)
-            VERSION=2.6-inktavo-cf31ce4
+            
             echo $REPOSITORY_NAME > /tmp/repo
             echo $VERSION > /tmp/version
       - aws-ecr/build_and_push_image:
