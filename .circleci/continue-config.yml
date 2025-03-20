@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@5.2
   aws-ecr: circleci/aws-ecr@9.4
+  slack: circleci/slack@5.1.1
 
 parameters:
   build-keycloak:
@@ -43,6 +44,13 @@ jobs:
           region: "${AWS_DEFAULT_REGION}"
           repo: "$(cat /tmp/repo)"
           tag: "$(cat /tmp/version),latest"
+      - slack/notify:
+          event: fail
+          mentions: '@Bruno Akira Hisatsugu'
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1          
 
 only-main: &only-main
   filters:
@@ -58,6 +66,7 @@ workflows:
           type: approval    
       - keycloak-build-and-deploy:
           context: AWS_STAGING
+          context: SLACK
           <<: *only-main
           requires:
             - manual-deploy?
