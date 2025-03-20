@@ -45,6 +45,11 @@ jobs:
           region: "${AWS_DEFAULT_REGION}"
           repo: "$(cat /tmp/repo)"
           tag: "$(cat /tmp/version)"
+      - aws-ecr/tag_image:
+          profile_name: oidc_profile
+          repo: "$(cat /tmp/repo)"
+          source_tag: "$(cat /tmp/version)"
+          target_tag: latest
       - aws-ecr/push_image:
           region: "${AWS_DEFAULT_REGION}"
           repo: "$(cat /tmp/repo)"
