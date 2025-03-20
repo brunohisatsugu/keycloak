@@ -25,7 +25,18 @@ jobs:
             REPOSITORY_NAME="platform/keycloak_379"
             REPOSITORY="${ECR_BASE}/${REPOSITORY_NAME}"
             VERSION=2.6-inktavo-$(git rev-parse --short HEAD)
-            TAG="${REPOSITORY}:${VERSION}"
+            TAG="${REPOSITORY}:2.6-inktavo-cf31ce4"
+
+            TAG_EXISTS=$(aws ecr list-images --repository-name "${REPOSITORY_NAME}" --query 'imageIds[*].imageTag' --output text | grep -w "${VERSION}")
+
+            if [ -z "$TAG_EXISTS" ]; then
+              echo $REPOSITORY_NAME > /tmp/repo
+              echo $VERSION > /tmp/version
+              echo $TAG > /tmp/tag
+            else
+              echo "Tag exists, skipping"
+              circleci-agent step halt
+            fi
 
             echo $REPOSITORY_NAME > /tmp/repo
             echo $VERSION > /tmp/version
