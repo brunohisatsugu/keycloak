@@ -32,7 +32,6 @@ jobs:
             VERSION=2.6-inktavo-$(git rev-parse --short HEAD)
             TAG="${REPOSITORY}:${VERSION}"
 
-            cat ~/.aws/credentials
             echo $REPOSITORY_NAME > /tmp/repo
             echo $VERSION > /tmp/version
             echo $TAG > /tmp/tag
@@ -48,13 +47,16 @@ jobs:
           path: .
           platform: linux/amd64
           push_image: true
-          region: "${AWS_DEFAULT_REGION}"
-          repo: "$(cat /tmp/repo)"
-          tag: "$(cat /tmp/version)"
-      - aws-ecr/push_image:
-          region: "${AWS_DEFAULT_REGION}"
-          repo: "$(cat /tmp/repo)"
-          tag: "$(cat /tmp/version)"       
+          region: "us-east-2"
+          repo: "platform/keycloak_379"
+          tag: "$(cat /tmp/version)"          
+          # region: "${AWS_DEFAULT_REGION}"
+          # repo: "$(cat /tmp/repo)"
+          # tag: "$(cat /tmp/version)"
+      # - aws-ecr/push_image:
+      #     region: "${AWS_DEFAULT_REGION}"
+      #     repo: "$(cat /tmp/repo)"
+      #     tag: "$(cat /tmp/version)"       
 
 only-main: &only-main
   filters:

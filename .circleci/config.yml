@@ -12,3 +12,4 @@ workflows:
           mapping: |
             keycloakify/.* build-keycloak true
             Dockerfile build-keycloak true
+            .circleci/continue-config.yml build-keycloak true
