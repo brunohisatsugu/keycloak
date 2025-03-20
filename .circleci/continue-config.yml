@@ -46,7 +46,6 @@ jobs:
           tag: "$(cat /tmp/version),latest"
       - slack/notify:
           event: fail
-          mentions: '@Bruno Akira Hisatsugu'
           template: basic_fail_1
       - slack/notify:
           event: pass
@@ -65,8 +64,9 @@ workflows:
           <<: *only-main
           type: approval    
       - keycloak-build-and-deploy:
-          context: AWS_STAGING
-          context: SLACK
+          context:
+            - AWS_STAGING
+            - SLACK
           <<: *only-main
           requires:
             - manual-deploy?
